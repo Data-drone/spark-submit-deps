@@ -5,8 +5,16 @@ import zipfile
 from setuptools import setup, find_packages
 
 from distutils.cmd import Command
-from pip.commands import WheelCommand
-from pip.req import parse_requirements
+
+try: # for pip >= 10
+    from pip._internal.commands import WheelCommand
+except ImportError: # for pip <= 9.0.3
+    from pip.commands import WheelCommand
+
+try: # for pip >= 10
+    from pip._internal.req import parse_requirements
+except ImportError: # for pip <= 9.0.3
+    from pip.req import parse_requirements
 
 
 PACKAGE_NAME = 'test_spark_submit'
@@ -88,7 +96,7 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.7',
     ],
 
     author='Aleksey Zhukov',
